@@ -3,7 +3,7 @@ import { IoSearch } from "react-icons/io5";
 
 function Search() {
   return (
-    <div>
+    <div className="h-[10vh]">
       <div className="px-6 py-4">
         <form action="">
           <div className="flex space-x-3">
