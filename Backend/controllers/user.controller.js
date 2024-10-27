@@ -16,13 +16,13 @@ export const signup = async (req, res) => { //naam hai babu iss function ka 'sig
             return res.status(400).json({ message: "Email already exists" });
         }
 
-        
+
 
         //? ------------------- yaha v "teen" jagah me await daale hai. Thik na.  <------ Ye important funda hai babu -------------------
         //! ------ Hashing the Password ------
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        const newUser = await new User({ name, email, password }); 
+        const newUser = await new User({ name, email, password: hashedPassword });
         await newUser.save().then(() =>
             res.status(201).json({ message: "Account created successfully", user })//status code jo yaad kiye hai usi me kuchh ka use kiye hai.
         );
