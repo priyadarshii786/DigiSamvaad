@@ -1,0 +1,20 @@
+{
+  "name": "digisamvaad_backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "author": "Tathagat Priyadarshi",
+  "license": "ISC",
+  "description": "A Subsidiary of FreshNest",
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "mongoose": "^8.7.3",
+    "nodemon": "^3.1.7",
+    "path": "^0.12.7"
+  }
+}
