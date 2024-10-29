@@ -25,7 +25,13 @@ export const signup = async (req, res) => {
             createTokenAndSaveCookie(newUser._id, res); //* -------- iss function me user ka ID (jo ki mongoDB database me dikhega) and res pass kr rhe hai.
             res
                 .status(201)
-                .json({ message: "Account created successfully", newUser });
+                .json({
+                    message: "Account created successfully", user: {
+                        _id: newUser._id,
+                        name: newUser.name,
+                        email: newUser.email
+                    },
+                });
         }
     }
     catch (error) {
@@ -38,7 +44,7 @@ export const signup = async (req, res) => {
 
 //! ------------------------------------------------------------------------------
 export const login = async (req, res) => {
-    const { email, password } = req.body; //* --------- iska mtlb hai ki "req.body" se email and password le rhe. Ab dekh bhai itna detail me likhe pad rha hai ki dimaag kharab ho gaya hai. Ye sb 1 ghanta me likh ke rkh dete hm or tum itna time le rha. "req.body" bole toh Postman se abhi daalna hai sb detail ie; email nd password.
+    const { email, password } = req.body;
     try {
         //async or await ka use fir se dekh lena bhai yaha.
         const user = await User.findOne({ email });
@@ -46,7 +52,7 @@ export const login = async (req, res) => {
         if (!user || !isMatch) {
             return res.status(404).json({ message: "Invalid Username or Password" });
         }
-        createTokenAndSaveCookie(user._id, res); //? --------- ab yaha pe token generate krwa rhe hai, yaani jb user login kre toh uske pass token rhna chahiye. Theek na.
+        createTokenAndSaveCookie(user._id, res);
         res
             .status(201)
             .json({
@@ -71,13 +77,9 @@ export const login = async (req, res) => {
 //! ------------------------------------------------------------------------------
 
 //! ------------------------------------------------------------------------------
-//? ------------ Logout ke liye simple funda rhega bhai ki jo token signup ke time genrate hua tha(arey whi token jisse login kr rhe the, mtlb signup ke time jo token mila tha na whi login ke waqt v rhega) toh usko delete kr denge. Toh na rhega token na user kr paayega login, or logout v ho jaayega. Smjha?
-
-//* ------------ ab bhai ye function bana denge fir isko route ke andar import krwa lenge. lie above two. simple.
-
 
 export const logout = async (req, res) => {
-    try { 
+    try {
         res.clearCookie('jwt'); //* ------- Token ka naam "jwt" rkhe the, hai na, toh usi ko clear kr rhe.
         res.status(200).json({ message: "User Logged Out Successfully" });
 
